@@ -1,24 +1,24 @@
-// app.js
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const userRoutes = require('./routes/userRoutes');
 
-const express = require("express");
-const bodyParser = require("body-parser");
+// Load environment variables from .env file
+dotenv.config();
 
+// Connect to the database
+mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to the database'))
+  .catch(err => console.error(err));
+
+// Create a new Express app
 const app = express();
 
-// Set up body-parser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
+// Middleware to parse JSON request bodies
+app.use(express.json());
 
-// Set up static file serving
-app.use(express.static("public"));
+// Mount the userRoutes router at the /users path
+app.use('/users', userRoutes);
 
-// Set up view engine
-app.set("view engine", "ejs");
-
-// Set up routes
-const userRoutes = require("./routes/user");
-app.use("/users", userRoutes);
-
-// Start server
-app.listen(3000, () => {
-  console.log("Server started on port 3000");
-});
+// Start the server
+app.listen(process.env.PORT, () => console.log(`Server started on port ${process.env.PORT}`));
