@@ -14,7 +14,7 @@ const seedUsers = async () => {
     await User.deleteMany({});
 
     // Create an array of user objects with fake data
-    const users = Array.from({ length: 10 }, () => ({
+    const users = Array.from({ length: 10 }, async () => ({
       firstname: faker.name.firstName(),
       lastname: faker.name.lastName(),
       email: faker.internet.email(),
