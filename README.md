@@ -16,4 +16,4 @@ services/auth.js - This file contains the functions for handling user authentica
 
 services/user.js - This file contains the functions for managing user accounts, such as creating, updating, and deleting users.
 
-The goal of this code is to provide a starting point for building a secure and scalable Node.js API that can be easily customized and extended. It follows best practices for folder structure, middleware usage, and modularization. By using this code as a template, developers can focus on building their application logic without worrying about setting up the basic infrastructure.
+The goal of this code is to provide a starting point for building a secure and scalable Node.js API that can be easily customized and extended. It is following best practices for folder structure, middleware usage, and modularization. By using this code as a template, any developer can focus on building their application logic without worrying about setting up the basic infrastructure.

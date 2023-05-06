@@ -1,30 +1,34 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const userRoutes = require("./routes/api/user");
+const express = require('express');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const cors = require('cors');
+const passport = require('passport');
+const routes = require('./routes/api');
 
-// Load environment variables from .env file
-dotenv.config();
-
-// Connect to the database
-mongoose
-  .connect(process.env.DB_CONNECTION, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("Connected to the database"))
-  .catch((err) => console.error(err));
-
-// Create a new Express app
+// Initialize express app
 const app = express();
 
-// Middleware to parse JSON request bodies
-app.use(express.json());
+// Middleware for parsing request body
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-// Mount the userRoutes router at the /users path
-app.use("/users", userRoutes);
+// Middleware for logging HTTP requests
+app.use(morgan('dev'));
 
-// Start the server
-app.listen(process.env.PORT, () =>
-  console.log(`Server started on port ${process.env.PORT}`)
-);
+// Middleware for handling CORS
+app.use(cors());
+
+// Middleware for authentication
+app.use(passport.initialize());
+require('./config/passport')(passport);
+
+// API routes
+app.use('/api', routes);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+module.exports = app;
