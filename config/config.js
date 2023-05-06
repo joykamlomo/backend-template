@@ -27,7 +27,7 @@ module.exports = {
     //   username: process.env.DB_USERNAME || "root",
     //   password: process.env.DB_PASSWORD || "",
     // },
-    jwtSecret: process.env.JWT_SECRET || "my_secret_key",
+    jwtSecret: process.env.JWT_SECRET || "ji(&54tJk)#ear%*}[::ksoaTGABJH]",
     port: process.env.PORT || 3000,
     api: {
       prefix: "/api/v1",
